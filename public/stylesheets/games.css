@@ -1,0 +1,64 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff; /* Changed background color to white */
+  }
+  
+  #container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #000000; /* Changed header color to white */
+    /* background-color: black; Added a background color for contrast */
+    padding: 10px; /* Added padding for better spacing */
+    border-radius: 8px; /* Optional: rounded corners */
+    /* width: 100vw; */
+  }
+  
+  #game-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .game-item {
+    width: calc(50% - 40px); /* Two items per row with some spacing */
+    margin: 20px;
+    text-align: center;
+    background-color: #ffffff; /* Background color for each game item */
+    border: 2px solid black; /* Border color around each game item */
+    border-radius: 10px; /* Rounded corners for the game item */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: box-shadow 0.3s; /* Transition effect for shadow */
+  }
+  
+  .game-item:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+  }
+  
+  .game-item a {
+    display: block;
+  }
+  
+  .game-item img {
+    width: 100%; /* Responsive image */
+    height: auto;
+    border-radius: 10px 10px 0 0; /* Rounded corners at the top */
+  }
+  
+  .description {
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: #333;
+  }
+  

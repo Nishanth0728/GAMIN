@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .container.mt-5.d-flex.justify-content-center.align-items-center(style='min-height:80vh')
+    .card.shadow-lg(style='max-width: 500px; width: 100%;')
+      .card-body
+        h3.card-title.text-center.mb-4 Create an Account
+        p.text-center.text-muted.mb-4
+          | Already have an account?
+          a(href='/signin', class='black-link') Sign In Now
+        form(action='/signup', method='POST')
+          .form-group
+            label(for='username') Username
+            input.form-control(type='text', id='username', name='username', placeholder='Choose a username', required=true)
+          .form-group
+            label(for='password') Password
+            input.form-control(type='password', id='password', name='password', placeholder='Create a password', required=true)
+          .form-group
+            label(for='confirm-password') Confirm Password
+            input.form-control(type='password', id='confirm-password', name='confirm-password', placeholder='Confirm your password', required=true)
+          button.btn.btn-block(style='background-color: black; color: white;', type='submit') Sign Up
+          a.btn.btn-secondary.btn-block(href='/') Cancel

@@ -1,0 +1,165 @@
+/* Remove scrolling bars */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+}
+
+/* Make the video fill the entire screen */
+.video-background {
+  position: absolute;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+#bgVideo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Styling the overlay text */
+.overlay {
+  text-align: center;
+}
+
+.overlay h1 {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  font-size: 60px; /* Increase font size for subheadings */
+  text-align: center;
+}
+
+.overlay h2 {
+  margin-bottom: 2rem;
+  font-size: 30px; /* Increase font size for subheadings */
+  text-align: center;
+}
+
+/* Styling the button */
+.letsgobutton {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  /* Black shade for the button */
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+.letsgobutton:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  /* Darker black shade on hover */
+}
+
+/* Custom Black Button Styles */
+.btn-black {
+  background-color: #000000; /* Black background */
+  color: #ffffff;            /* White text */
+  border: 1px solid #000000; /* Black border */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+.btn-black:hover {
+  background-color: #333333; /* Darker shade of black on hover */
+  color: #ffffff;            /* Keep text white */
+}
+
+
+@media (max-width: 768px) {
+  .btn-black {
+    width: 100%; /* Full width on smaller screens */
+    margin-bottom: 10px; /* Add some space between buttons on mobile */
+  }
+}
+
+/* Custom class for black-colored links */
+.black-link {
+  color: #000000;  /* Black text color */
+  text-decoration: none;  /* Remove underline (optional) */
+}
+
+.black-link:hover {
+  color: #333333;  /* Slightly lighter shade of black on hover */
+  text-decoration: underline;  /* Underline on hover (optional) */
+}
+
+
+/* Styles for adjusting image size in game items */
+.game-item img {
+  width: 200px;       /* Adjust the width as needed */
+  height: auto;       /* Maintain aspect ratio */
+  max-width: 100%;    /* Make the image responsive */
+  display: block;     /* Center the image (optional, based on layout) */
+  margin: 0 auto;     /* Center the image horizontally */
+}
+
+
+/* styles.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+#def-btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+#def-btn:hover {
+  background-color: rgb(44, 44, 44);
+  color: rgb(255, 255, 255);
+}
+
+
+.overlay-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  padding: 20px;
+  background-color: #0000007d; /* Optional background color */
+  border-radius: 10px; /* Optional border radius */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional box shadow */
+  width: 600px; /* Set a fixed width */
+  height: 300px;
+  color: rgb(255, 255, 255); /* Set text color to white */
+  font-family: 'Bebas Neue', sans-serif; /* Gaming-inspired font */
+   /* Add a subtle glow effect */
+  text-align: center;
+  display: flex; /* Use flexbox to center content */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  flex-direction: column; /* Stack content vertically */
+}
+

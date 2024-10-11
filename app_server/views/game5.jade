@@ -1,0 +1,213 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Tetris Game
+
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f8f8f8;
+        display: flex;
+        flex-direction: column; /* Arrange children in a column */
+        height: 100vh; /* Full height of viewport */
+      }
+
+      .game-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        padding: 20px;
+        background: #fff;
+        border: 2px solid #333;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 400px;
+        max-height: 600px;
+        margin: auto;
+      }
+
+      canvas {
+        border: 1px solid #000;
+        background-color: #eaeaea;
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      #restart-btn {
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+
+      #restart-btn:hover {
+        background-color: rgb(44, 44, 44);
+        color: rgb(255, 255, 255);
+      }
+
+  body
+    include layout.jade
+    .game-wrapper
+      h1 Tetris Game
+      canvas#gameCanvas(width='200', height='400')
+      h2#result
+      button#restart-btn(onclick='resetGame()') Restart Game
+
+    script.
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+      const grid = 20;
+      const rows = canvas.height / grid;
+      const cols = canvas.width / grid;
+
+      let board = Array.from({ length: rows }, () => Array(cols).fill(0));
+      let currentPiece;
+      let currentPiecePosition = { x: 0, y: 0 };
+      let timer;
+
+      function startGame() {
+        resetGame();
+        timer = setInterval(update, 1000);
+      }
+
+      function resetGame() {
+        clearInterval(timer);
+        board = Array.from({ length: rows }, () => Array(cols).fill(0));
+        currentPiece = getRandomPiece();
+        currentPiecePosition = { x: Math.floor(cols / 2) - 1, y: 0 };
+        draw();
+      }
+
+      function getRandomPiece() {
+        const pieces = [
+          [[1, 1, 1, 1]], // I
+          [[1, 1], [1, 1]], // O
+          [[0, 1, 0], [1, 1, 1]], // T
+          [[1, 1, 0], [0, 1, 1]], // S
+          [[0, 1, 1], [1, 1, 0]], // Z
+          [[1, 0, 0], [1, 1, 1]], // L
+          [[0, 0, 1], [1, 1, 1]], // J
+        ];
+        return pieces[Math.floor(Math.random() * pieces.length)];
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let row = 0; row < rows; row++) {
+          for (let col = 0; col < cols; col++) {
+            if (board[row][col] === 1) {
+              ctx.fillStyle = 'blue';
+              ctx.fillRect(col * grid, row * grid, grid, grid);
+            }
+          }
+        }
+        drawPiece(currentPiece, currentPiecePosition);
+      }
+
+      function drawPiece(piece, position) {
+        piece.forEach((row, rIndex) => {
+          row.forEach((value, cIndex) => {
+            if (value === 1) {
+              ctx.fillStyle = 'blue';
+              ctx.fillRect((cIndex + position.x) * grid, (rIndex + position.y) * grid, grid, grid);
+            }
+          });
+        });
+      }
+
+      function checkCollision(piece, position) {
+        for (let rIndex = 0; rIndex < piece.length; rIndex++) {
+          for (let cIndex = 0; cIndex < piece[rIndex].length; cIndex++) {
+            if (piece[rIndex][cIndex] === 1) {
+              let boardX = cIndex + position.x;
+              let boardY = rIndex + position.y;
+              if (boardX < 0 || boardX >= cols || boardY >= rows || (board[boardY] && board[boardY][boardX] === 1)) {
+                return true;
+              }
+            }
+          }
+        }
+        return false;
+      }
+
+      function mergePiece() {
+        currentPiece.forEach((row, rIndex) => {
+          row.forEach((value, cIndex) => {
+            if (value === 1) {
+              board[currentPiecePosition.y + rIndex][currentPiecePosition.x + cIndex] = 1; // Merge the piece into the board
+            }
+          });
+        });
+      }
+
+      function clearRows() {
+        for (let r = rows - 1; r >= 0; r--) { // Loop backwards for rows
+          if (board[r].every(value => value === 1)) { // Check if the row is filled
+            board.splice(r, 1); // Remove filled row
+            board.unshift(Array(cols).fill(0)); // Add an empty row at the top
+          }
+        }
+      }
+
+      function update() {
+        currentPiecePosition.y++;
+        if (checkCollision(currentPiece, currentPiecePosition)) {
+          currentPiecePosition.y--; // Move back up if collision occurs
+          mergePiece();
+          clearRows();
+          currentPiece = getRandomPiece();
+          currentPiecePosition = { x: Math.floor(cols / 2) - 1, y: 0 };
+          if (checkCollision(currentPiece, currentPiecePosition)) {
+            clearInterval(timer);
+            document.getElementById('result').textContent = 'Game Over';
+          }
+        }
+        draw();
+      }
+
+      function rotatePiece(piece) {
+        const rotatedPiece = piece[0].map((val, index) => piece.map(row => row[index])).reverse();
+        return rotatedPiece;
+      }
+
+      function movePiece(dir) {
+        const newPosition = { x: currentPiecePosition.x + dir.x, y: currentPiecePosition.y + dir.y };
+        if (!checkCollision(currentPiece, newPosition)) {
+          currentPiecePosition = newPosition;
+          draw();
+        }
+      }
+
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowLeft') movePiece({ x: -1, y: 0 });
+        if (event.key === 'ArrowRight') movePiece({ x: 1, y: 0 });
+        if (event.key === 'ArrowDown') movePiece({ x: 0, y: 1 });
+        if (event.key === 'ArrowUp') {
+          const rotated = rotatePiece(currentPiece);
+          if (!checkCollision(rotated, currentPiecePosition)) {
+            currentPiece = rotated;
+          }
+        }
+        draw();
+      });
+
+      document.addEventListener('DOMContentLoaded', startGame);

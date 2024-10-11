@@ -1,0 +1,73 @@
+extends layout
+
+block content
+  link(rel="stylesheet", href="/stylesheets/about.css")
+  .container
+    h1 About Our Games
+    p Welcome to our gaming platform! We provide a variety of games for you to enjoy. Below is a list of games we currently offer:
+    ul.game-list
+      li Tic Tac Toe
+      li Rock Paper Scissors
+      li Connect 4
+      li Snake Game
+      li Tetris Game
+      li Memory Game
+    
+    h2 History of Video Games
+    p Video games have come a long way since their inception in the 1950s. From early arcade machines to home consoles, and now to mobile devices, video games have evolved into one of the most popular forms of entertainment worldwide.
+    
+    p In the 1970s, arcade games like Pong and Space Invaders became hugely popular. The 1980s saw the rise of home consoles with iconic games like Pac-Man and Super Mario Bros. As technology advanced, the 1990s brought 3D graphics and more immersive gameplay experiences. Today, video games are part of a global culture with eSports, virtual reality, and millions of players worldwide.
+
+    h2 Featured Game Clips
+    p Watch some of our featured game clips below:
+
+    .video-slider
+      .slider-container
+        video.controls(controls, src='/videos/clip1.mp4')
+        video.controls(controls, src='/videos/clip2.mp4')
+        video.controls(controls, src='/videos/clip3.mp4')
+        video.controls(controls, src='/videos/clip4.mp4')
+        video.controls(controls, src='/videos/clip5.mp4')
+
+      .slider-nav
+        button.prev Previous
+        button.next Next
+
+    script.
+      let slideIndex = 0;
+      const slides = document.querySelectorAll('.slider-container video');
+
+      function showSlides() {
+        for (let i = 0; i < slides.length; i++) {
+          slides[i].style.display = 'none';  
+        }
+
+        slides[slideIndex].style.display = 'block';  
+        slides[slideIndex].play(); // Start playing the new video
+      }
+
+      function nextSlide() {
+        slides[slideIndex].pause(); // Pause the current video
+        slideIndex++;
+        if (slideIndex >= slides.length) { slideIndex = 0; } // Loop to the first video
+        showSlides();
+      }
+
+      function prevSlide() {
+        slides[slideIndex].pause(); // Pause the current video
+        slideIndex--;
+        if (slideIndex < 0) { slideIndex = slides.length - 1; } // Loop back to the last video
+        showSlides();
+      }
+
+      // Set event listeners for each video to trigger the next slide when the video ends
+      slides.forEach((video) => {
+        video.addEventListener('ended', nextSlide); // Move to the next slide when video ends
+      });
+
+      // Initially show the first video and play it
+      showSlides();
+
+      // Add event listeners for the navigation buttons
+      document.querySelector('.slider-nav button.next').addEventListener('click', nextSlide);
+      document.querySelector('.slider-nav button.prev').addEventListener('click', prevSlide);

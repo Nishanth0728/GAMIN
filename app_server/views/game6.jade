@@ -1,0 +1,167 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Memory Game
+
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f8f8f8;
+        display: flex; /* Allow body to use flexbox for centering */
+        flex-direction: column; /* Stack elements vertically */
+        min-height: 100vh; /* Ensure the body takes full height */
+      }
+
+      .game-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Center game vertically in available space */
+        align-items: center; /* Center game horizontally */
+        flex-grow: 1; /* Allow this to take up remaining vertical space */
+        padding: 20px;
+        background: #fff;
+        border: 2px solid #333;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 400px;
+        max-height: 500px;
+        margin: auto; /* Center horizontally with auto margin */
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 60px); /* 4 columns */
+        grid-template-rows: repeat(4, 60px); /* 4 rows */
+        gap: 10px; /* Space between cards */
+      }
+
+      .card {
+        width: 60px;
+        height: 60px;
+        background-color: #ccc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        cursor: pointer;
+        border-radius: 5px; /* Rounded corners for cards */
+        transition: background-color 0.3s; /* Smooth transition for hover effects */
+      }
+
+      .card.flipped {
+        background-color: #fff; /* Color when flipped */
+      }
+
+      .card.matched {
+        background-color: #8bc34a; /* Color for matched cards */
+        cursor: default; /* Disable hover effect on matched cards */
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      #restart-btn {
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+
+      #restart-btn:hover {
+        background-color: rgb(44, 44, 44);
+        color: rgb(255, 255, 255);
+      }
+
+  body
+    include layout.jade
+    .game-wrapper
+      h1 Memory Game
+      .grid(id='grid')
+      h2#result
+      button#restart-btn(onclick='resetGame()') Restart Game
+
+    script.
+      let firstCard = null;
+      let secondCard = null;
+      let lockBoard = false;
+      const cardValues = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'E', 'E', 'F', 'F', 'G', 'G', 'H', 'H'];
+      
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+        }
+      }
+
+      function createCards() {
+        const shuffledValues = [...cardValues]; // Create a copy of the card values
+        shuffle(shuffledValues); // Shuffle the card values
+        
+        const gridElement = document.getElementById('grid');
+        gridElement.innerHTML = ''; // Clear previous cards
+        
+        shuffledValues.forEach((cardValue, index) => {
+          const cardElement = document.createElement('div');
+          cardElement.classList.add('card');
+          cardElement.setAttribute('data-value', cardValue);
+          cardElement.setAttribute('onclick', 'flipCard(this)');
+          // Append the card to the grid
+          gridElement.appendChild(cardElement);
+        });
+      }
+
+      function flipCard(card) {
+        if (lockBoard || card.classList.contains('matched')) return;
+
+        card.textContent = card.dataset.value; // Show character to match from data-value
+        card.classList.add('flipped'); // Add flipped class
+
+        if (!firstCard) {
+          firstCard = card; // Store the first card
+        } else {
+          secondCard = card; // Store the second card
+          lockBoard = true; // Lock the board during match check
+          checkMatch(); // Check for match
+        }
+      }
+
+      function checkMatch() {
+        if (firstCard.textContent === secondCard.textContent) {
+          firstCard.classList.add('matched');
+          secondCard.classList.add('matched');
+          resetBoard();
+        } else {
+          setTimeout(() => {
+            firstCard.textContent = ''; // Hide value if not matched
+            secondCard.textContent = ''; // Hide value if not matched
+            resetBoard(); // Reset the board
+          }, 1000);
+        }
+      }
+
+      function resetBoard() {
+        firstCard = null;
+        secondCard = null;
+        lockBoard = false;
+        if (document.querySelectorAll('.matched').length === 16) {
+          document.getElementById('result').textContent = 'You Win!'; // Win condition
+        }
+      }
+
+      function resetGame() {
+        createCards(); // Create and shuffle cards
+        document.getElementById('result').textContent = ''; // Reset the result text
+        resetBoard(); // Reset the board for a new game
+      }
+
+      // Initialize the game on load
+      document.addEventListener('DOMContentLoaded', createCards);

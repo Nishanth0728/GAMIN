@@ -1,0 +1,67 @@
+/* Basic styling for the navbar */
+* {  
+    margin: 0;  
+    padding: 0;  
+    box-sizing: border-box; /* Include padding and border in element's total width and height */  
+} 
+.navbar {  
+    display: flex;  
+    justify-content: center;  /* Center all items in the navbar */
+    align-items: center;  
+    padding: 10px 20px;  
+    background-color: #222; /* Darker background color */  
+}  
+
+.navbar-container {  
+    width: 100%; /* Full width of the navbar */
+    display: flex;  
+    justify-content: center; /* Center items horizontally */
+}  
+
+.navbar-items {  
+    display: flex; /* Aligns items in a single line */
+    align-items: center; /* Vertically centers items */
+    gap: 30px; /* Space between logo and links */
+}  
+
+.navbar .logo {  
+    font-size: 2.5rem; /* Increased font size */  
+    font-weight: bold;  
+    color: white;  
+    text-decoration: none;  
+}  
+
+.nav-links {
+    font-family: 'Bebas Neue', sans-serif; 
+    list-style-type: none;  
+    margin: 0;  
+    padding: 0;  
+    display: flex;  
+    gap: 30px; /* Space between links */
+}  
+
+.nav-links li {  
+    margin: 0;  
+}  
+
+.nav-links a {  
+    text-decoration: none;  
+    color: white;  
+    font-size: 1.5rem; /* Increased font size */  
+    padding: 10px 15px; /* Added padding for better spacing */  
+}  
+
+.nav-links a:hover {  
+    color: #ccc; /* Lighter hover effect */  
+}  
+
+/* Footer styling */  
+/* .footer {  
+    text-align: center;  
+    padding: 5px;  
+    background-color: #222;   
+    color: white;  
+    position: fixed;  
+    width: 100%;  
+    bottom: 0;  
+}   */

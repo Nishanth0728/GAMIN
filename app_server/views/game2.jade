@@ -1,0 +1,88 @@
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title Rock Paper Scissors Game
+    style.
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #f8f8f8;
+      }
+      .game-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 80px);  
+      }
+      .game-container {
+        text-align: center;
+        background: #fff;
+        border: 2px solid #333;
+        padding: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+      .choices {
+        margin: 20px;
+      }
+      .choices button {
+        margin: 10px 15px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+      .choices button:hover {
+        background-color: #555;
+      }
+
+      #def-btn {
+        margin-top: 15px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: black;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
+
+      #def-btn:hover {
+        background-color: rgb(44, 44, 44);
+        color: rgb(255, 255, 255);
+      }
+
+  body
+    include layout.jade 
+    .game-wrapper
+      .game-container
+        h1 Rock Paper Scissors
+        .choices
+          button(onclick="playGame('Rock')") Rock
+          button(onclick="playGame('Paper')") Paper
+          button(onclick="playGame('Scissors')") Scissors
+        h2#result
+
+    script.
+      function playGame(playerChoice) {
+        const choices = ['Rock', 'Paper', 'Scissors'];
+        const computerChoice = choices[Math.floor(Math.random() * 3)];
+        let result = '';
+
+        if (playerChoice === computerChoice) {
+          result = `It's a draw! Both chose ${playerChoice}`;
+        } else if (
+          (playerChoice === 'Rock' && computerChoice === 'Scissors') ||
+          (playerChoice === 'Scissors' && computerChoice === 'Paper') ||
+          (playerChoice === 'Paper' && computerChoice === 'Rock')
+        ) {
+          result = `You win! ${playerChoice} beats ${computerChoice}`;
+        } else {
+          result = `You lose! ${computerChoice} beats ${playerChoice}`;
+        }
+        document.getElementById('result').textContent = result;
+      }
