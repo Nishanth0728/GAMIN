@@ -3,7 +3,7 @@ module.exports.getGames = (req, res) => {
 };
 
 module.exports.getGame1 = (req, res) => {
-    res.render('game1', { title: 'Tic Tac Doom' });
+    res.render('game1', { title: '**********' });
 };
 
 module.exports.getGame2 = (req, res) => {
@@ -22,4 +22,9 @@ module.exports.getGame5 = (req, res) => {
 };
 module.exports.getGame6 = (req, res) => {
     res.render('game6', { title: '**********' });
+
+};
+module.exports.getGame7 = (req, res) => {
+    res.render('game7', { title: '**********' });
+    
 };

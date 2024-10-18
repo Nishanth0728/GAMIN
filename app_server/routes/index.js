@@ -10,12 +10,13 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/games', gamesController.getGames);
-router.get('/game/game1', gamesController.getGame1);
-router.get('/game/game2', gamesController.getGame2);
-router.get('/game/game3', gamesController.getGame3);
-router.get('/game/game4', gamesController.getGame4);
-router.get('/game/game5', gamesController.getGame5);
-router.get('/game/game6', gamesController.getGame6);
+router.get('/game/Tic-Tac-Toe', gamesController.getGame1);
+router.get('/game/Rock-Paper-Scissors', gamesController.getGame2);
+router.get('/game/Connect-4', gamesController.getGame3);
+router.get('/game/Snake-Game', gamesController.getGame4);
+router.get('/game/Tetris-Game', gamesController.getGame5);
+router.get('/game/Memory-Game', gamesController.getGame6);
+router.get('/game/demo', gamesController.getGame7);
 
 router.get('/vlogs', gamesOthers.getVlogs);
 router.get('/about', gamesOthers.getabout);
@@ -30,8 +31,9 @@ router.post('/signin', function(req, res) {
   // Add your authentication logic here (dummy check for now)
   if (username === 'Team**' && password ==='GAMIN') {
     u = 1;
+    let logins=true;
     // Redirect to home page on successful sign in
-    res.redirect('/');
+    res.redirect('/games');
   } else {
     // Redirect back to the login page on failure
     res.redirect('/signin');
