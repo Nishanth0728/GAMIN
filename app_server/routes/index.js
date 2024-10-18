@@ -16,7 +16,7 @@ router.get('/game/Connect-4', gamesController.getGame3);
 router.get('/game/Snake-Game', gamesController.getGame4);
 router.get('/game/Tetris-Game', gamesController.getGame5);
 router.get('/game/Memory-Game', gamesController.getGame6);
-router.get('/game/demo', gamesController.getGame7);
+// router.get('/game/demo', gamesController.getGame7);
 
 router.get('/vlogs', gamesOthers.getVlogs);
 router.get('/about', gamesOthers.getabout);

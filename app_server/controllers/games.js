@@ -24,7 +24,7 @@ module.exports.getGame6 = (req, res) => {
     res.render('game6', { title: '**********' });
 
 };
-module.exports.getGame7 = (req, res) => {
-    res.render('game7', { title: '**********' });
+// module.exports.getGame7 = (req, res) => {
+//     res.render('game7', { title: '**********' });
     
-};
+// };
